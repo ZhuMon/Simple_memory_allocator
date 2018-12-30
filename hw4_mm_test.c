@@ -3,13 +3,14 @@
 
 int main(int argc, char *argv[])
 {
+
     while(1) {
         char command[20] = {};
         char tmp_char;
         printf("\e[1;32mmyshell]e[0m$ ");
 
         scanf("%s", command);
-        if(strcmp(command, "alloc") == 0) {
+        if(strcmp(command, "malloc") == 0) {
 
         } else if( strcmp(command, "free") == 0) {
 
