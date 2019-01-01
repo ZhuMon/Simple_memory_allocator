@@ -15,6 +15,7 @@ int power(int a, int b);
 void print_bin(int n);
 void print_mmap();
 
+
 struct chunk_info_t {
     unsigned prev_chunk_size:31;
     unsigned curr_chunk_size:31;
@@ -27,7 +28,8 @@ struct mychunk {
     struct chunk_info_t size_and_flag;
 };
 
-
+void merge(struct mychunk *tmp);
+void check_threshold();
 
 void *hw_malloc(size_t bytes);
 int alloc_bin(size_t bytes);

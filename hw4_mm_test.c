@@ -7,10 +7,11 @@ int main(int argc, char *argv[])
     while(1) {
         char command[20] = {};
         char tmp_char;
-        printf("\e[1;32mmyshell\e[0m$ ");
+        //printf("\e[1;32mmyshell\e[0m$ ");
 
         if(scanf("%s", command) != 1) {
-            err_msg("error input\n");
+            //err_msg("error input\n");
+            break;
         }
         if(strcmp(command, "alloc") == 0) {
             size_t bytes;
@@ -27,6 +28,21 @@ int main(int argc, char *argv[])
             //printf("sbrk: %p\n", get_start_sbrk());
             printf("0x%012lx\n", alloc - get_start_sbrk());
         } else if( strcmp(command, "free") == 0) {
+            void *addr;
+            int err;
+
+            if(scanf("%c", &tmp_char) != 1) {
+                err_msg("error input\n");
+            }
+            if(scanf("%p", &addr) != 1) {
+                err_msg("error input\n");
+            }
+            err = hw_free(addr);
+            if(err == 1) {
+                printf("success\n");
+            } else if(err == 0) {
+                printf("fail\n");
+            }
 
         } else if( strcmp(command, "print") == 0) {
             int bin_i;
