@@ -13,6 +13,7 @@
 void *split(int bin_index);
 int power(int a, int b);
 void print_bin(int n);
+void print_mmap();
 
 struct chunk_info_t {
     unsigned prev_chunk_size:31;

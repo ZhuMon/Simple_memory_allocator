@@ -30,10 +30,21 @@ int main(int argc, char *argv[])
 
         } else if( strcmp(command, "print") == 0) {
             int bin_i;
-            if(scanf("%d", &bin_i) != 1) {
+            if(scanf("%c", &tmp_char) != 1) {
                 err_msg("error input\n");
             }
-            print_bin(bin_i);
+
+            if(scanf("bin[%d]", &bin_i) != 1) {
+                if(scanf("%s", command) != 1) {
+                    err_msg("error input\n");
+                } else {
+                    if(strcmp(command, "mmap_alloc_list") == 0) {
+                        print_mmap();
+                    }
+                }
+            } else {
+                print_bin(bin_i);
+            }
         }
     }
     return 0;

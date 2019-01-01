@@ -289,3 +289,15 @@ void print_bin(int n)
         tmp = tmp -> next;
     }
 }
+
+void print_mmap()
+{
+    struct mychunk *tmp;
+
+    tmp = mmap_head -> next;
+    while(tmp != mmap_head) {
+
+        printf("%p--------%d\n", tmp, tmp->size_and_flag.curr_chunk_size);
+        tmp = tmp -> next;
+    }
+}
