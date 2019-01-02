@@ -48,6 +48,7 @@ void *hw_malloc(size_t bytes)
         b_bin = 10;
     }
 
+    check_threshold();
     if(bytes+24 > mmap_threshold) {
         //mmap
 
