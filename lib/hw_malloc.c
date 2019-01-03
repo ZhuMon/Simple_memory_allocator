@@ -48,10 +48,13 @@ void *hw_malloc(size_t bytes)
         b_bin = 10;
     }
 
+    //printf("here\n");
     check_threshold();
+    //printf("threshold: %zd\n", mmap_threshold);
     if(bytes+24 > mmap_threshold) {
         //mmap
 
+        //printf("in if\n");
 
         struct mychunk *p, *now;
         p = mmap(NULL, bytes+24,PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, 0, 0);
@@ -66,13 +69,17 @@ void *hw_malloc(size_t bytes)
 
         if(mmap_head == NULL) {
             mmap_head = mmap(NULL, bytes+24,PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, 0, 0);
+            if (mmap_head == (void*)-1) {
+                err_msg("mmap() failed\n");
+                return NULL;
+            }
             mmap_head -> next = p;
             mmap_head -> prev = p;
             mmap_head -> size_and_flag.mmap_flag = 1;
             p -> next = mmap_head;
             p -> prev = mmap_head;
             p -> size_and_flag.prev_chunk_size = 0;
-
+            //printf("in if 2\n");
         } else {
             now = mmap_head -> next;
             while(now != mmap_head) {
@@ -91,8 +98,10 @@ void *hw_malloc(size_t bytes)
             p -> size_and_flag.prev_chunk_size = p -> prev -> size_and_flag.curr_chunk_size;
 
         }
+        //printf("before void\n");
 
         void *tmp = p;
+        //printf("before return\n");
         return tmp+24;
 
     } else {
@@ -468,15 +477,17 @@ void check_threshold()
 {
     struct mychunk *tmp;
 
-    for(int i = 10; i > 0; i--) {
+    for(int i = 10; i >= 0; i--) {
         tmp = bin[i] -> next;
         while(tmp != bin[i]) {
             if(tmp -> size_and_flag.allo_flag == 0) {
-                mmap_threshold = power(2, i+5+1);
+                mmap_threshold = power(2, i+5);
+                b_bin = i;
                 return;
             }
             tmp = tmp -> next;
         }
 
     }
+
 }

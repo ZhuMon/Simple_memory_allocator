@@ -26,7 +26,11 @@ int main(int argc, char *argv[])
             alloc = hw_malloc(bytes);
             //printf("alloc: %p\n", alloc);
             //printf("sbrk: %p\n", get_start_sbrk());
-            printf("0x%012lx\n", alloc - get_start_sbrk());
+            if((long int)alloc > (long int)get_start_sbrk() + 64*1024) {
+                printf("%012p\n", alloc);
+            } else {
+                printf("0x%012lx\n", alloc - get_start_sbrk());
+            }
         } else if( strcmp(command, "free") == 0) {
             void *addr;
             int err;
