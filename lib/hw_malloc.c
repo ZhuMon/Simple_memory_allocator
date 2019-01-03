@@ -329,6 +329,9 @@ int hw_free(void *mem)
 {
     struct mychunk *tmp;
 
+    if(heap == NULL) {
+        return 0;
+    }
     if((long int)mem > (long int)get_start_sbrk() + 64*1024) {
         tmp = mem-24;
         tmp -> prev -> next = tmp -> next;
@@ -464,6 +467,10 @@ void print_bin(int n)
 void print_mmap()
 {
     struct mychunk *tmp;
+
+    if(mmap_head == NULL) {
+        return;
+    }
 
     tmp = mmap_head -> next;
     while(tmp != mmap_head) {
