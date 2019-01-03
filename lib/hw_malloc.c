@@ -496,5 +496,6 @@ void check_threshold()
         }
 
     }
+    mmap_threshold = 0;
 
 }
